@@ -1,0 +1,104 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Опрос</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f9;
+        }
+        .container {
+            width: 300px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .question {
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        .answers button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: none;
+            background-color: #4CAF50;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .answers button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="question" id="question"></div>
+        <div class="answers" id="answers"></div>
+    </div>
+
+    <script>
+        const questions = [
+            { question: "Во сколько встречаемся?", answers: ["14:00", "15:00", "14:30"] },
+            { question: "Чу делаем в начале?", answers: ["смотрим кино", "гуляем", "смотрим тебе ботинки"] },
+            { question: "Чу кушаем?", answers: ["стейк", "идем кушать куда нибудь", "пенис"] },
+            { question: "Чу делаем потом?", answers: ["смотрим кино", "гуляем", "смотрим тебе ботинки"] },
+            { question: "Чу делаем после?", answers: ["смотрим кино", "гуляем", "смотрим тебе ботинки"] },
+            { question: "На какое кино идем?", answers: ["робот", "мелодрама", "шекер"] },
+            { question: "Куда идем гулять?", answers: ["парк", "шоппинг(всякие приколы смотреть)", "развлечение (бильярд и тд)"] },
+            { question: "Куда идем ботинки смотреть?", answers: ["дп", "Арбат", "жопа"] }
+        ];
+
+        let currentQuestion = 0;
+        let userAnswers = [];
+
+        function showQuestion() {
+            if (currentQuestion < questions.length) {
+                document.getElementById("question").innerText = questions[currentQuestion].question;
+                const answersDiv = document.getElementById("answers");
+                answersDiv.innerHTML = "";
+                questions[currentQuestion].answers.forEach((answer, index) => {
+                    const button = document.createElement("button");
+                    button.innerText = answer;
+                    button.onclick = () => selectAnswer(answer);
+                    answersDiv.appendChild(button);
+                });
+            } else {
+                showResults();
+            }
+        }
+
+        function selectAnswer(answer) {
+            userAnswers.push(answer);
+            currentQuestion++;
+            showQuestion();
+        }
+
+        function showResults() {
+            document.getElementById("question").innerText = "Ваши ответы:";
+            const answersDiv = document.getElementById("answers");
+            answersDiv.innerHTML = "";
+            userAnswers.forEach((answer, index) => {
+                const result = document.createElement("p");
+                result.innerText = `${index + 1}. ${answer}`;
+                answersDiv.appendChild(result);
+            });
+        }
+
+        showQuestion();
+    </script>
+</body>
+</html>
